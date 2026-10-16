@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Procedure Text Lab | Instruction Puzzle</title>
+<style>
+:root{--navy:#17324d;--blue:#2864dc;--sky:#eaf3ff;--mint:#dff8ec;--gold:#ffca62;--coral:#ff786e;--ink:#172436;--muted:#607086;--paper:#fff;--line:#d8e2ee;--bg:#f4f7fb}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,Helvetica,sans-serif;line-height:1.5}
+button,input{font:inherit}button{cursor:pointer;border:0;border-radius:14px;padding:12px 18px;font-weight:700;transition:.15s}button:focus-visible{outline:3px solid var(--gold);outline-offset:2px}
+.primary{background:var(--blue);color:white}.secondary{background:#e7eef8;color:var(--navy)}.success{background:#13865c;color:white}.warning{background:#fff0d0;color:#704800}.danger{background:#ffe5e2;color:#8c2823}
+header{background:linear-gradient(120deg,#142c49,#2864dc);color:white;padding:24px clamp(16px,4vw,48px) 20px}
+.topline{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap}.brand{font-size:.82rem;letter-spacing:.12em;text-transform:uppercase;font-weight:800;opacity:.9}
+header h1{font-size:clamp(1.8rem,4vw,3rem);line-height:1.1;margin:14px 0 8px}header p{max-width:780px;margin:0;color:#e4edff}
+.pill{display:inline-block;border:1px solid #ffffff55;border-radius:999px;padding:6px 12px;font-size:.82rem}
+main{max-width:1120px;margin:auto;padding:22px clamp(12px,3vw,28px) 50px}
+.progress-wrap{display:flex;align-items:center;gap:12px;margin:0 0 18px}.progress{height:10px;flex:1;background:#dbe4f0;border-radius:99px;overflow:hidden}.progress>div{height:100%;width:0;background:linear-gradient(90deg,#2864dc,#29b987);transition:width .3s}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}.tab{background:#e4ebf5;color:#30435c}.tab.active{background:var(--navy);color:#fff}
+.screen{display:none}.screen.active{display:block;animation:fade .2s ease}@keyframes fade{from{opacity:.5;transform:translateY(4px)}to{opacity:1;transform:none}}
+.card{background:var(--paper);border:1px solid var(--line);border-radius:20px;padding:clamp(16px,3vw,26px);box-shadow:0 8px 24px #17324d0b;margin-bottom:16px}
+h2{margin:0 0 12px;font-size:clamp(1.35rem,3vw,2rem);color:var(--navy)}h3{margin:0 0 8px;color:var(--navy)}.muted{color:var(--muted)}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:14px}
+.hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:18px;align-items:stretch}.illustration{background:linear-gradient(135deg,#fff1cc,#ffe0d6);border-radius:18px;display:flex;align-items:center;justify-content:center;min-height:220px;font-size:clamp(4rem,10vw,7rem)}
+.big-number{font-size:2.2rem;font-weight:900;color:var(--blue)}.label{font-size:.8rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.feature{background:#f5f8fd;border-radius:14px;padding:16px}.tag{display:inline-block;background:var(--sky);color:#234d9b;padding:4px 9px;border-radius:8px;font-size:.85rem;font-weight:700;margin:3px}
+.recipe-block{border-left:5px solid var(--blue);padding:10px 14px;background:#f7faff;border-radius:0 12px 12px 0;margin:8px 0}
+select{padding:10px 12px;border:1px solid var(--line);border-radius:10px;background:white;max-width:100%}
+.quiz-option{display:block;width:100%;text-align:left;background:#f1f5fb;color:var(--ink);margin:8px 0;border:2px solid transparent}.quiz-option:hover{border-color:#a9c4f5}.quiz-option.chosen{border-color:var(--blue);background:var(--sky)}
+.feedback{min-height:26px;font-weight:700;margin:10px 0}.correct{color:#087c50}.incorrect{color:#b3362d}
+.puzzle-layout{display:grid;grid-template-columns:1fr 1fr;gap:16px}.card-list{display:flex;flex-direction:column;gap:9px}.piece{background:#fff7df;border:2px solid #f0d78f;border-radius:13px;padding:12px;display:flex;gap:10px;align-items:center;text-align:left;width:100%;color:#463819;min-height:58px}.piece.selected{border-color:var(--blue);background:#e8f1ff;color:#153c86}.piece .num{flex:none;border-radius:9px;background:#fff;padding:4px 8px;font-weight:900}
+.dropzone{min-height:280px;background:#f6f9fd;border:2px dashed #b9c9dc;border-radius:16px;padding:10px}.slot{display:flex;gap:9px;align-items:center;background:white;border:1px solid var(--line);padding:10px;border-radius:11px;margin:7px 0;min-height:55px}.slot .slotnum{font-weight:900;color:var(--blue);min-width:24px}.slot button{padding:7px 10px;margin-left:auto}.hint{background:#fff6df;border:1px solid #f4d78b;padding:12px 14px;border-radius:12px}
+footer{padding:20px;text-align:center;color:var(--muted);font-size:.85rem}
+@media(max-width:700px){.hero-grid,.puzzle-layout{grid-template-columns:1fr}.illustration{min-height:150px}.tabs button{flex:1 1 42%}.topline{align-items:flex-start}}
+@media print{header,.tabs,.progress-wrap,button,footer{display:none!important}main{max-width:none;padding:0}.screen{display:block!important}.card{break-inside:avoid;box-shadow:none}}
+</style>
+</head>
+<body>
+<header>
+  <div class="topline"><div class="brand">Interactive Learning Media · English X / SMK</div><span class="pill">Project Based Learning (PjBL)</span></div>
+  <h1>Procedure Text Lab</h1>
+  <p>Explore recipes, identify text structure and language features, then build an Instruction Puzzle with your team.</p>
+</header>
+<main>
+  <div class="progress-wrap"><strong id="progressText">Your journey: 0/5</strong><div class="progress"><div id="progressBar"></div></div><strong id="scoreText">Score: 0</strong></div>
+  <nav class="tabs" aria-label="Learning sections">
+    <button class="tab active" data-screen="home">1. Start</button>
+    <button class="tab" data-screen="learn">2. Learn</button>
+    <button class="tab" data-screen="identify">3. Identify</button>
+    <button class="tab" data-screen="puzzle">4. Puzzle Lab</button>
+    <button class="tab" data-screen="present">5. Present & Quiz</button>
+  </nav>
+
+  <section class="screen active" id="home">
+    <div class="card hero-grid">
+      <div>
+        <span class="tag">MISSION 01</span><h2>Can you make instructions clear?</h2>
+        <p>Imagine your friend wants to make iced tea, but the recipe steps are mixed up. Your team must rebuild the instructions so anyone can follow them.</p>
+        <p><strong>Learning goals</strong></p>
+        <ul><li>Identify the social function and structure of a procedure text.</li><li>Recognize imperative verbs and sequence connectors.</li><li>Arrange mixed-up instructions in a logical order.</li><li>Present and demonstrate your team's result using the PID.</li></ul>
+        <button class="primary" onclick="go('learn')">Start learning →</button>
+      </div>
+      <div class="illustration" aria-label="Iced tea illustration">🧋🍋</div>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="big-number">01</div><h3>Explore</h3><p class="muted">Read a model recipe and notice how it works.</p></div>
+      <div class="card"><div class="big-number">02</div><h3>Investigate</h3><p class="muted">Identify structure and language clues.</p></div>
+      <div class="card"><div class="big-number">03</div><h3>Create</h3><p class="muted">Rebuild a recipe puzzle, then present it.</p></div>
+    </div>
+  </section>
+
+  <section class="screen" id="learn">
+    <div class="card">
+      <span class="tag">LEARN THE CONCEPT</span><h2>What is a Procedure Text?</h2>
+      <p>A <strong>procedure text</strong> explains how to make something or how to do something through clear, ordered instructions.</p>
+      <div class="grid">
+        <div class="feature"><h3>Social Function</h3><p>To tell or explain how to make or do something.</p></div>
+        <div class="feature"><h3>Generic Structure</h3><p><strong>Goal</strong> → <strong>Ingredients / Materials</strong> → <strong>Steps</strong></p></div>
+        <div class="feature"><h3>Language Features</h3><p>Imperative verbs, action verbs, and sequence connectors.</p></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Model Text: Making a Glass of Iced Tea</h2>
+      <div class="recipe-block"><strong>Goal</strong><br>To make a glass of iced tea.</div>
+      <div class="recipe-block"><strong>Ingredients</strong><br>A tea bag, hot water, sugar, and ice cubes.</div>
+      <div class="recipe-block"><strong>Steps</strong><br>1. First, put a tea bag in a cup.<br>2. Next, pour hot water into the cup and let the tea brew.<br>3. Then, add sugar and stir until it dissolves. Let the tea cool.<br>4. Finally, add ice cubes and serve the iced tea.</div>
+      <h3>Language clues</h3>
+      <p><span class="tag">Imperative verbs: put, pour, add, stir, serve</span> <span class="tag">Sequence connectors: first, next, then, finally</span></p>
+      <div class="hint">Safety note: hot water should be handled by the teacher or an adult. In class, use a safe simulation if needed.</div>
+    </div>
+    <div class="card"><h3>Quick check</h3><p>Which part tells the reader what they need before starting?</p>
+      <button class="quiz-option" onclick="quickCheck(this,false)">Steps</button>
+      <button class="quiz-option" onclick="quickCheck(this,true)">Ingredients / Materials</button>
+      <button class="quiz-option" onclick="quickCheck(this,false)">The title only</button>
+      <div class="feedback" id="quickFeedback" aria-live="polite"></div>
+      <button class="primary" onclick="go('identify')">Continue to Identify →</button>
+    </div>
+  </section>
+
+  <section class="screen" id="identify">
+    <div class="card">
+      <span class="tag">MISSION 02</span><h2>Identify the structure and language</h2>
+      <p>Choose the best answer for each question. You can retry, but each question adds points only once.</p>
+      <div id="identifyQuestions"></div>
+      <div class="feedback" id="identifyFeedback" aria-live="polite"></div>
+      <button class="primary" onclick="finishIdentify()">Check answers</button>
+      <button class="secondary" onclick="resetIdentify()">Try again</button>
+    </div>
+  </section>
+
+  <section class="screen" id="puzzle">
+    <div class="card">
+      <span class="tag">TEAM PROJECT</span><h2>Instruction Puzzle: Rebuild the recipe</h2>
+      <p>Work in a group. Select a sentence card from the mixed-up list, then choose an empty position on the right. On a touch screen, you can tap cards and slots. Use the buttons to move cards up or down.</p>
+      <div class="hint"><strong>Team roles:</strong> coordinator · reader · card arranger · language checker · presenter. Discuss before deciding.</div>
+      <div class="puzzle-layout" style="margin-top:16px">
+        <div><h3>Mixed-up cards</h3><div class="card-list" id="pieces"></div></div>
+        <div><h3>Your logical order</h3><div class="dropzone" id="slots"></div></div>
+      </div>
+      <div class="feedback" id="puzzleFeedback" aria-live="polite"></div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+        <button class="primary" onclick="checkPuzzle()">Check my order</button>
+        <button class="secondary" onclick="shufflePuzzle()">Shuffle again</button>
+        <button class="secondary" onclick="clearPuzzle()">Clear order</button>
+        <button class="warning" onclick="showHint()">Show a hint</button>
+      </div>
+      <div id="puzzleHint" class="hint" style="display:none;margin-top:12px"></div>
+    </div>
+  </section>
+
+  <section class="screen" id="present">
+    <div class="card">
+      <span class="tag">MISSION 03</span><h2>Present your project</h2>
+      <p>Use the PID to display your final sequence. Each team member should contribute. Use this presentation guide:</p>
+      <ol>
+        <li>Introduce your recipe and explain its social function.</li>
+        <li>Point out the Goal, Ingredients, and Steps.</li>
+        <li>Explain why your team chose this order.</li>
+        <li>Identify at least three imperative verbs and two sequence connectors.</li>
+        <li>Demonstrate the instructions safely or use a simulation.</li>
+      </ol>
+      <h3>Peer feedback: Two stars and one wish</h3>
+      <div class="grid">
+        <div class="feature"><strong>★ Star 1</strong><p>One thing the group did well:</p><input id="star1" placeholder="Write feedback..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px"></div>
+        <div class="feature"><strong>★ Star 2</strong><p>Another thing done well:</p><input id="star2" placeholder="Write feedback..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px"></div>
+        <div class="feature"><strong>✦ One wish</strong><p>One helpful suggestion:</p><input id="wish" placeholder="A suggestion..." style="width:100%;padding:10px;border:1px solid var(--line);border-radius:10px"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h2>Exit Quiz</h2><div id="finalQuestions"></div>
+      <div class="feedback" id="finalFeedback" aria-live="polite"></div>
+      <button class="primary" onclick="checkFinal()">Submit quiz</button>
+      <button class="secondary" onclick="resetFinal()">Reset quiz</button>
+    </div>
+    <div class="card">
+      <h2>Learning reflection</h2>
+      <p>Complete these sentences with your own ideas.</p>
+      <label for="reflection1">Today, I learned that a procedure text…</label><br><input id="reflection1" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px">
+      <br><label for="reflection2">The hardest part of the puzzle was…</label><br><input id="reflection2" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px">
+      <br><label for="reflection3">My contribution to the team was…</label><br><input id="reflection3" style="width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;margin:6px 0 12px">
+      <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="success" onclick="completeReflection()">Finish learning journey</button><button class="secondary" onclick="window.print()">Print / Save as PDF</button><button class="secondary" onclick="resetAll()">Reset all progress</button></div>
+      <div id="completion" class="feedback" aria-live="polite"></div>
+    </div>
+  </section>
+</main>
+<footer>Procedure Text Lab · Offline-ready interactive learning media · Class X / SMK</footer>
+<script>
+const state={done:new Set(),score:0,answered:new Set(),identifySubmitted:false,finalSubmitted:false,selected:null,order:[]};
+function go(id){document.querySelectorAll('.screen').forEach(s=>s.classList.toggle('active',s.id===id));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.screen===id));window.scrollTo({top:0,behavior:'smooth'});if(id==='identify')renderIdentify();if(id==='puzzle')renderPuzzle();if(id==='present')renderFinal();updateProgress();}
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',()=>go(b.dataset.screen)));
+function markDone(id){state.done.add(id);updateProgress()}
+function addScore(key,points){if(!state.answered.has(key)){state.answered.add(key);state.score+=points;}updateProgress()}
+function updateProgress(){document.getElementById('progressText').textContent=`Your journey: ${state.done.size}/5`;document.getElementById('progressBar').style.width=(state.done.size/5*100)+'%';document.getElementById('scoreText').textContent='Score: '+state.score;}
+function quickCheck(el,correct){document.querySelectorAll('#learn .quiz-option').forEach(b=>b.classList.remove('chosen'));el.classList.add('chosen');const f=document.getElementById('quickFeedback');if(correct){f.textContent='Correct! Ingredients / Materials tell us what we need.';f.className='feedback correct';addScore('quick',5);markDone('learn')}else{f.textContent='Not quite. Look for the part that lists what you need.';f.className='feedback incorrect';}}
+const iq=[
+{q:'1. What is the social function of a procedure text?',opts:['To describe a person','To explain how to make or do something','To tell a past experience'],a:1,why:'It gives instructions for making or doing something.'},
+{q:'2. Which section usually states what the reader wants to make?',opts:['Goal','Ingredients','Steps'],a:0,why:'The Goal states the intended result.'},
+{q:'3. Which item belongs in Ingredients?',opts:['Stir the tea','A tea bag and sugar','Finally, serve it'],a:1,why:'Ingredients lists the items needed.'},
+{q:'4. Which one is an imperative verb in an instruction?',opts:['Beautiful','Pour','Yesterday'],a:1,why:'“Pour” tells the reader what action to do.'},
+{q:'5. Which word signals the final step?',opts:['Next','Before','Finally'],a:2,why:'“Finally” commonly introduces the last step.'}
+];
+function renderQuestionSet(target,questions,prefix){const el=document.getElementById(target);el.innerHTML='';questions.forEach((q,i)=>{const d=document.createElement('div');d.className='feature';d.style.margin='12px 0';d.innerHTML=`<h3>${q.q}</h3>`;q.opts.forEach((o,j)=>{const b=document.createElement('button');b.className='quiz-option';b.textContent=o;b.dataset.answer=j;b.onclick=()=>{d.querySelectorAll('button').forEach(x=>x.classList.remove('chosen'));b.classList.add('chosen');d.dataset.choice=j;};d.appendChild(b)});el.appendChild(d)});}
+function renderIdentify(){if(!state.identifySubmitted)renderQuestionSet('identifyQuestions',iq,'i')}
+function finishIdentify(){let correct=0,answered=0;document.querySelectorAll('#identifyQuestions .feature').forEach((d,i)=>{const c=Number(d.dataset.choice);if(!Number.isNaN(c)){answered++;if(c===iq[i].a)correct++;}});const f=document.getElementById('identifyFeedback');if(answered<iq.length){f.textContent=`Please answer all ${iq.length} questions first.`;f.className='feedback incorrect';return;}iq.forEach((q,i)=>{const d=document.querySelectorAll('#identifyQuestions .feature')[i];d.querySelectorAll('button').forEach((b,j)=>{if(j===q.a)b.className='quiz-option correct';else if(j===Number(d.dataset.choice))b.className='quiz-option incorrect';});});f.textContent=`You got ${correct}/${iq.length}. ${correct>=4?'Great work!': 'Review the explanations and try again.'}`;f.className='feedback '+(correct>=4?'correct':'incorrect');if(correct>=4){addScore('identify',correct*4);markDone('identify');}state.identifySubmitted=true;}
+function resetIdentify(){state.identifySubmitted=false;document.getElementById('identifyFeedback').textContent='';renderQuestionSet('identifyQuestions',iq,'i')}
+const puzzleCards=[
+{id:'goal',text:'Goal: To make a glass of iced tea.'},
+{id:'ingredients',text:'Ingredients: a tea bag, hot water, sugar, and ice cubes.'},
+{id:'first',text:'First, put a tea bag in a cup.'},
+{id:'next',text:'Next, pour hot water into the cup and let the tea brew.'},
+{id:'then',text:'Then, add sugar and stir until it dissolves. Let the tea cool.'},
+{id:'finally',text:'Finally, add ice cubes and serve the iced tea.'}
+];
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+function shufflePuzzle(){state.order=[];state.selected=null;state.pool=shuffle([...puzzleCards]);document.getElementById('puzzleFeedback').textContent='';document.getElementById('puzzleHint').style.display='none';renderPuzzle()}
+function renderPuzzle(){if(!state.pool)state.pool=shuffle([...puzzleCards]);const p=document.getElementById('pieces'),s=document.getElementById('slots');p.innerHTML='';s.innerHTML='';
+state.pool.filter(c=>!state.order.includes(c.id)).forEach((c,i)=>{const b=document.createElement('button');b.className='piece'+(state.selected===c.id?' selected':'');b.innerHTML=`<span class="num">+</span><span>${c.text}</span>`;b.onclick=()=>{state.selected=c.id;renderPuzzle()};p.appendChild(b)});
+for(let i=0;i<puzzleCards.length;i++){const id=state.order[i];const slot=document.createElement('div');slot.className='slot';slot.innerHTML=`<span class="slotnum">${i+1}.</span><span style="flex:1">${id?puzzleCards.find(c=>c.id===id).text:'Tap a card, then tap here'}</span>`;slot.onclick=()=>{if(state.selected){if(!state.order.includes(state.selected)){state.order[i]=state.selected;state.selected=null;renderPuzzle()}}};if(id){const up=document.createElement('button');up.className='secondary';up.textContent='↑';up.setAttribute('aria-label','Move up');up.onclick=e=>{e.stopPropagation();if(i>0){[state.order[i-1],state.order[i]]=[state.order[i],state.order[i-1]];renderPuzzle()}};const down=document.createElement('button');down.className='secondary';down.textContent='↓';down.setAttribute('aria-label','Move down');down.onclick=e=>{e.stopPropagation();if(i<state.order.length-1){[state.order[i+1],state.order[i]]=[state.order[i],state.order[i+1]];renderPuzzle()}};const rem=document.createElement('button');rem.className='danger';rem.textContent='×';rem.setAttribute('aria-label','Remove card');rem.onclick=e=>{e.stopPropagation();state.order.splice(i,1);state.order=state.order.filter(Boolean);renderPuzzle()};slot.append(up,down,rem)}s.appendChild(slot)}
+}
+function checkPuzzle(){const expected=['goal','ingredients','first','next','then','finally'];const f=document.getElementById('puzzleFeedback');if(state.order.length!==6||state.order.some(x=>!x)){f.textContent='Place all six cards in the order area first.';f.className='feedback incorrect';return}let n=state.order.filter((x,i)=>x===expected[i]).length;if(n===6){f.textContent='Excellent! Your recipe is in a logical order. Prepare to explain your choices.';f.className='feedback correct';addScore('puzzle',25);markDone('puzzle')}else{f.textContent=`${n}/6 cards are in the correct position. Check the Goal, Ingredients, and sequence connectors.`;f.className='feedback incorrect'}}
+function clearPuzzle(){state.order=[];state.selected=null;renderPuzzle();document.getElementById('puzzleFeedback').textContent=''}
+function showHint(){const h=document.getElementById('puzzleHint');h.style.display='block';h.textContent='Hint: Start with the Goal, then list the Ingredients. After that, arrange the action steps from preparing the tea to serving it. Look at First, Next, Then, and Finally.'}
+const fq=[
+{q:'1. “Add the sugar.” is an example of…',opts:['An imperative instruction','A sequence connector','An ingredient'],a:0},
+{q:'2. Which structure section contains ordered actions?',opts:['Goal','Steps','Ingredients'],a:1},
+{q:'3. Choose two sequence connectors.',opts:['Sugar and tea','First and finally','Cup and spoon'],a:1}
+];
+function renderFinal(){if(!state.finalSubmitted)renderQuestionSet('finalQuestions',fq,'f')}
+function checkFinal(){let correct=0,answered=0;document.querySelectorAll('#finalQuestions .feature').forEach((d,i)=>{const c=Number(d.dataset.choice);if(!Number.isNaN(c)){answered++;if(c===fq[i].a)correct++}});const f=document.getElementById('finalFeedback');if(answered<fq.length){f.textContent='Please answer all questions first.';f.className='feedback incorrect';return}fq.forEach((q,i)=>{const d=document.querySelectorAll('#finalQuestions .feature')[i];d.querySelectorAll('button').forEach((b,j)=>{if(j===q.a)b.className='quiz-option correct';else if(j===Number(d.dataset.choice))b.className='quiz-option incorrect'})});f.textContent=`Exit quiz result: ${correct}/${fq.length}.`;f.className='feedback '+(correct===fq.length?'correct':'incorrect');if(correct===fq.length){addScore('final',15);markDone('quiz')}state.finalSubmitted=true}
+function resetFinal(){state.finalSubmitted=false;document.getElementById('finalFeedback').textContent='';renderQuestionSet('finalQuestions',fq,'f')}
+function completeReflection(){const vals=['reflection1','reflection2','reflection3'].map(id=>document.getElementById(id).value.trim());if(vals.some(v=>!v)){document.getElementById('completion').textContent='Complete all three reflection sentences first.';document.getElementById('completion').className='feedback incorrect';return}markDone('reflection');document.getElementById('completion').textContent='Learning journey completed! Save or print your work for your teacher.';document.getElementById('completion').className='feedback correct'}
+function resetAll(){if(!confirm('Reset all answers and progress?'))return;state.done.clear();state.score=0;state.answered.clear();state.identifySubmitted=false;state.finalSubmitted=false;state.order=[];state.pool=shuffle([...puzzleCards]);['quickFeedback','identifyFeedback','puzzleFeedback','finalFeedback','completion'].forEach(id=>document.getElementById(id).textContent='');['reflection1','reflection2','reflection3','star1','star2','wish'].forEach(id=>document.getElementById(id).value='');renderQuestionSet('identifyQuestions',iq,'i');renderQuestionSet('finalQuestions',fq,'f');renderPuzzle();updateProgress();go('home')}
+renderQuestionSet('identifyQuestions',iq,'i');renderQuestionSet('finalQuestions',fq,'f');shufflePuzzle();updateProgress();
+</script>
+</body>
+</html>
