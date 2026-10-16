@@ -1,0 +1,2 @@
+# MPI_Procedure_Text_Instruction_Puzzle
+MPI_Procedure_Text_Instruction_Puzzle_ARIWIDARI_SMKN 5 KOLUT
